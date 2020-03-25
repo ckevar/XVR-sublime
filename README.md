@@ -27,9 +27,19 @@ copy __make.bat__ and, __run.bat__ into your XVR project directory
 ```bash
 %S3DC% <your_file.s3d> -I %S3D_DIR%
 ```
-2. Change the __<your_file.s3d>__ with your maing __*.s3d__ project file.
+2. Change the __<your_file.s3d>__ with your main __*.s3d__ project file.
+3. Go to the line where you see:
+```bash
+if %1==1 %XVRGLUT% <your_file.s3d.bin>
+```
+4. Change __<your_file.s3d.bin>__ with your main bin file, which has the same name as the main __*.s3d__ file + _.bin_
+5. We are done with __make.bat__ file
 
-if %1==1 %XVRGLUT% <your_file.bin>
+7. Open __run.bat__ and go to the line where you see:
+```bash
+%XVRGLUT% <your_file.s3d.bin>
+```
+8. Change __<your_file.s3d.bin>__ with your main bin file, just like 4. 
 
 ### to compiler
 1. open __cmd__ and type:
