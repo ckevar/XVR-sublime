@@ -41,8 +41,26 @@ if %1==1 %XVRGLUT% <your_file.s3d.bin>
 ```
 8. Change __<your_file.s3d.bin>__ with your main bin file, just like 4. 
 
-### to compiler
-1. open __cmd__ and type:
+### Compile and Run
+1. Open __cmd__ and type:
 ```bash
 cd path/to/your/xvr/project/directory
+```
+2. to compile, type:
+```bash
+make
+```
+3. to compile and the run, type:
+```bash
+make 1
+```
+
+### Only Run
+1. Open __cmd__ and type:
+```bash
+cd path/to/your/xvr/project/directory
+```
+2. to compile, type:
+```bash
+run
 ```
