@@ -1,0 +1,170 @@
+%YAML 1.2
+---
+# http://www.sublimetext.com/docs/3/syntax.html
+file_extensions:
+  - s3d
+scope: source.c
+variables:
+  types_var: var|SET
+  xvr_predefined_functions_var: OnDownload|OnInit|OnFrame|OnTimer|OnEvent|OnExit|DownloadReady
+  keyword_control: if|for|while|foreach|switch
+  keyword_general: else|do|continue|break|case|goto
+  keyword_scene: SceneBegin|SceneEnd
+  VmFunctions_var: AngleAxisToQuaternion|Atan2|AxisAngleToQuaternion|CameraActivate|CameraFree|CameraGetAnimation|CameraGetCurrent|CameraGetDirection|CameraGetFrames|CameraGetMatrix|CameraGetPosition|CameraGetRotationMatrix|CameraGetRotationMatrix3|CameraGetTarget|CameraGetXAxis|CameraGetYAxis|CameraGetZAxis|CameraLinkToListener|CameraReadAnimation|CameraRotate|CameraRotateABS|CameraScaleSamples|CameraSetAnimation|CameraSetBounds|CameraSetDirection|CameraSetMatrix|CameraSetPivotPoint|CameraSetPosition|CameraSetRotation|CameraSetTarget|Ceil|ConsoleColor|ConsoleFilledRect|ConsoleFinish|ConsoleFont|ConsoleLines|ConsoleRect|ConsoleText|ConsoleWidth|CreateEmptyTexture|DataIn|DataOut|EnumAudioStreamingDevices|EraseCache|EulerToQuaternion|Event|EventPost|EventSend|FileDownload|FileExist|FileRead|Floor|FreeCamera|GetAamType|GetCameraAnimation|GetCameraDirection|GetCameraFrames|GetCameraMatrix|GetCameraPosition|GetCameraRotationMatrix|GetCameraTarget|GetCameraXAxis|GetCameraYAxis|GetCameraZAxis|GetCurrentDir|GetDate|GetPerformanceTimer|GetScreenResolution|GetScriptDir|GetScriptUrl|GetTime|GetTrackerButton|GetTrackerJoy|GetTrackerPos|GetTrackerQuaternion|GetTrackerRot|HasFocus|InvertMatrix|Keyboard|KeyPressed|LoadBackground|LoadCookie|LoadFile|LoadMesh|LoadModule|LoadNewMesh|LoadTexture|Matrix3ToQuaternion|MatrixDet_3|MatrixDet_4|MatrixIdentity_3|MatrixIdentity_4|MatrixInverse_3|MatrixInverse_4|MatrixInverseTranspose_3|MatrixInverseTranspose_4|MatrixMultiplyMatrix_3|MatrixMultiplyMatrix_4|MatrixMultiplyVector_3|MatrixMultiplyVector_4|MatrixSum_3|MatrixSum_4|MatrixTranspose_3|MatrixTranspose_4|NetAcceptTCP|NetClose|NetConnectTCP|NetCreateChannel|NetCreateChannelTCP|NetDataReady|NetGetIP|NetReceiveFrom|NetReceiveFromTCP|NetSendTo|NetSendToTCP|NetSetMulticastIP|NetVarReceiveFrom|NetVarReceiveFromTCP|NetVarSendTo|NetVarSendToTCP|NewAWav|NewBillBoard|NewCurve|NewHtmlPage|NewLight|NewMaterial|NewObject|NewShader|NewText|Norm|Output|OutputLN|PackVector|PendingDownload|ProgressDownload|QuaternionDiff|QuaternionProduct|QuaternionSlerp|QuaternionSum|QuaternionToAngleAxis|QuaternionToAxisAngle|QuaternionToEuler|QuaternionToMatrix3|Quit|Rand|ReadCameraAnimation|ReadComm|ResetPerformanceTimer|SaveCookie|ScaleCameraSamples|SceneBegin|SceneBeginAbs|SceneBeginRel|SceneDisable|SceneEnable|SceneEnableFog|SceneEnd|SceneGetParam|SceneSetCallback|SceneSetParam|SetActiveCamera|SetActiveTexture|SetAmbientLight|SetAudio3DParam|SetCameraAnimation|SetCameraBounds|SetCameraDirection|SetCameraMatrix|SetCameraPosition|SetCameraRotation|SetCameraTarget|SetClearColor|SetCommParameters|SetCurrentDir|SetCursorPos|SetCursorShape|SetFadeValue|SetFrameRate|SetLocalDir|SetScreenRatio|SetScreenResolution|SetTimeStep|SetTrackerButton|SetTrackerJoy|SetTrackerLock|SetTrackerPos|SetTrackerQuaternion|SetTrackerRot|SetXVRWindowFullScreen|ShowCursor|Sleep|Split|Sprintf|Sscanf|StoreTexture|SwapBuffers|ToFloat|UnpackVector|VarStringDecode|VarStringEncode|VectorRotate|WriteComm
+
+contexts:
+  main:
+    - include: types
+    - include: string
+    - include: comments
+    - include: preprocessors
+    - include: descriptors
+    - include: keyword
+    - include: numbers
+    - include: CVm_functions
+
+    - match: '[A-Za-z_0-9]+(?=\s*(\(|$))'
+      scope: variable.function.c
+
+  CVm_functions:
+    - match: 'CVm[A-Za-z]+(?=\s*(\(|$))'
+      scope: entity.name.constant.preprocessor.c
+    - match: 'Camera[A-Za-z]+(?=\s*(\(|$))'
+      scope: entity.name.constant.preprocessor.c
+    - match: '{{keyword_scene}}'
+      scope: entity.name.constant.preprocessor.c
+    - match: '{{VmFunctions_var}}'
+      scope: entity.name.constant.preprocessor.c
+    
+
+  numbers:
+    - match: '(?<![A-Za-z_])[0-9]'
+      scope: constant.numeric.float.decimal.c
+    - match: '(?<=[A-Za-z_])((?<=[0-9])\.)'
+      scope: constant.numeric.float.decimal.c
+    - match: '\.(?=[0-9])'
+      scope: constant.numeric.float.decimal.c
+
+  string:
+    - match: '"'
+      scope: string.quoted.other.lt-gt.include.c
+      set:
+        - match: '[[:alpha:][:alnum:]./@\-\*\[\]_]+'
+          scope: string.quoted.other.lt-gt.include.c
+        - match: '"'
+          scope: string.quoted.other.lt-gt.include.c
+          pop: true
+  types:
+    - match: '{{types_var}}'
+      scope: storage.type.c
+
+  xvr_predefined_functions:
+    - match: '({{xvr_predefined_functions_var}})(?=\s*(\(|$))'
+      scope: keyword.control.c
+      pop: true
+
+  keyword:
+      - match: '\b{{keyword_control}}\b(?=\s*(\(|$))'
+        scope: keyword.control.c
+      - match: '\b{{keyword_general}}\b'
+        scope: keyword.control.c
+
+  descriptors:
+    - match: ^\s*(class)\b
+      scope: storage.type.c
+      set: 
+        - match: '[A-Za-z_0-9]+'
+          scope: entity.name.constant.preprocessor.c
+          pop: true
+
+    - match: ^\s*(function)\b
+      scope: storage.type.c
+      set:
+        # function definition
+        - include: xvr_predefined_functions
+        - match: '[A-Za-z_0-9:]+(?=\s*(\(|$))'
+          scope: entity.name.constant.preprocessor.c
+          pop: true 
+    - include: body_function
+
+
+  body_function:
+    # -- BODY FUNCTION --   
+      # scope: entity.name.constant.preprocessor.c
+    - match: '{'
+      set: 
+      # - meta_content_scope: meta.function.c meta.block.c
+      - include: types
+      - include: comments
+      - include: string
+      - include: numbers
+      - include: keyword
+      - include: CVm_functions
+
+      - match: '[A-Za-z_0-9]+(?=\s*(\(|$))'
+        scope: variable.function.c
+      - match: '}'
+        pop: true
+  # function-call:
+  preprocessors:
+    - match: ^\s*(#\s*define)\b
+      scope: keyword.control.c 
+      push:
+        - match: \s*\t*[A-Za-z_0-9]*
+          scope: entity.name.constant.preprocessor.c
+          pop: true
+
+    - match: ^\s*(#\s*include)\b
+      scope: keyword.control.c
+      set:
+        - match: <
+          scope: string.quoted.other.lt-gt.include.c
+          set:
+            - match: ">"
+              scope: string.quoted.other.lt-gt.include.c
+              pop: true
+            - match: '[A-Za-z_0-9./]+'
+              scope: string.quoted.other.lt-gt.include.c
+        - match: '"'
+          scope: string.quoted.other.lt-gt.include.c
+          set:
+            - match: '"'
+              scope: string.quoted.other.lt-gt.include.c
+              pop: true
+            - match: '[A-Za-z_0-9./]+'
+              scope: string.quoted.other.lt-gt.include.c
+  
+  comments:
+    - match: (//\s*)(TODO)
+      captures:
+        1: comment.line.banner.c
+        2: invalid.illegal.stray-bracket-end
+      push:
+        - match: .*$
+          scope: comment.line.banner.c
+          pop: true
+    - match: //.*$
+      scope: comment.line.banner.c
+    - match: /\*
+      scope: comment.line.banner.c
+      push:
+        - match: '.*\*/'
+          scope: comment.line.banner.c
+          pop: true
+        - match: .*$
+          scope: comment.line.banner.c
+    # - match: AAAABBBB
+    #   scope: constant.numeric.c
+    # - match: AAAA
+    #   scope: keyword.control.c
+      # push:
+      #   pop: true
+  #   - match: \(
+  #     push: brackets
+  #   - match: \)
+  #     scope: invalid.illegal.stray-bracket-end
+
+  # brackets:
+  #   - match: \)
+  #     pop: true
+  #   - include: main
