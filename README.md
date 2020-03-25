@@ -10,19 +10,29 @@ Paste the files __sublime/XVR.sublime-text__ and, __sublime/XVR.sublime-completa
 
 You need to install the compiler and the XVRGlut, [from here](https://sourceforge.net/projects/xvrstudio/files/),  in order to compile and run the __*.s3d__ files.
 
-### settings
+### Settings
 
-On the __compiler/make.bat__ and __compiler/run.bat__ files check if the variables *S3DC*, *S3D_DIR* and, *XVRGLUT* are point:
+#### step 1
+On the __compiler/make.bat__ and __compiler/run.bat__ files check if the variables *S3DC*, *S3D_DIR* and, *XVRGLUT* are pointing:
 - *S3DC* -> s3dc.exe
 - *S3D_DIR* -> VRMedia/Include
 - *XVRGLUT* -> XVRGlut.exe
 if the installation was done by default no need to change anything.
 
+#### step 2
+copy __make.bat__ and, __run.bat__ into your XVR project directory
+
+####  step3 
+1. Open __make.bat__ and go to the line where you see:
 ```bash
-c:
+%S3DC% <your_file.s3d> -I %S3D_DIR%
 ```
+2. Change the __<your_file.s3d>__ with your maing __*.s3d__ project file.
+
+if %1==1 %XVRGLUT% <your_file.bin>
+
 ### to compiler
-1. open cmd and go to your project folder
+1. open __cmd__ and type:
 ```bash
-c:
+cd path/to/your/xvr/project/directory
 ```
