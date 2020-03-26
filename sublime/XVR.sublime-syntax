@@ -22,10 +22,12 @@ contexts:
     - include: keyword
     - include: numbers
     - include: CVm_functions
-    # - include: general_function
+    - include: general_function
 
   CVm_functions:
     - match: 'CVm[A-Za-z]+(?=\s*(\(|$))'
+      scope: entity.name.constant.preprocessor.c
+    - match: 'CVM[A-Za-z]+(?=\s*(\(|$))'
       scope: entity.name.constant.preprocessor.c
     - match: '{{VmFunctionsTCP_var}}(?=\s*(\(|$))'
       scope: entity.name.constant.preprocessor.c
