@@ -5,7 +5,7 @@
     [
     	// { "trigger": "class", "contents": "<a href=\"$1\">$0</a>" },
     	{ "trigger": "class", "contents": "class ${1:Class} {\n\t${0:}\n};" },
-    	{ "trigger": "function", "contents": "function ${1:Foo}(${0:}) {\n\t\n};" },
+    	{ "trigger": "function", "contents": "function ${1:Foo}(${0:}) {\n\t\n}" },
     	{ "trigger": "#define", "contents": "#define ${0:SYMBOL}" },
     	{ "trigger": "NetCreateChannel", "contents": "NetCreateChannel(${1:}, ${2:}, ${0:});"},
     	{ "trigger": "NetConnectTCP", "contents": "NetConnectTCP(${1:}, ${2:}, ${0:});"},
