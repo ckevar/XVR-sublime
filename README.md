@@ -17,7 +17,8 @@ On the __compiler/make.bat__ and __compiler/run.bat__ files check if the variabl
 - *S3DC* -> s3dc.exe
 - *S3D_DIR* -> VRMedia/Include
 - *XVRGLUT* -> XVRGlut.exe
-if the installation was done by default no need to change anything.
+
+If the installation was done by default no need to change anything.
 
 #### step 2
 copy __make.bat__ and, __run.bat__ into your XVR project directory
