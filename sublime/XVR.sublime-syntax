@@ -61,7 +61,7 @@ contexts:
           scope: string.quoted.other.lt-gt.include.c
           pop: true
   types:
-    - match: '\b{{types_var}}\b'
+    - match: '\b({{types_var}})\b'
       scope: storage.type.c
 
   xvr_predefined_functions:
@@ -114,12 +114,14 @@ contexts:
         pop: true
   # function-call:
   preprocessors:
-    - match: ^\s*(#\s*define)\b
+    - match: ^\s*(#\s*define|#\s*ifndef)\b
       scope: keyword.control.c 
       push:
         - match: \s*\t*[A-Za-z_0-9]*
           scope: entity.name.constant.preprocessor.c
           pop: true
+    - match: ^\s*(#\s*endif)\b
+      scope: keyword.control.c
 
     - match: ^\s*(#\s*include)\b
       scope: keyword.control.c
